@@ -1,0 +1,92 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  padding: 0 0 0 20px;
+  text-decoration: none;
+  text-align: center;
+  color: #dbd7d7;
+}
+body {
+  padding-top: 20px;
+  background-color: #22232b;
+  color: #dbd7d7;
+}
+.timer {
+  padding: 20px 20px;
+  background-color: rgb(32, 32, 32);
+}
+.timer__blocks-list {
+  width: 80px;
+  padding: 5px 5px;
+  background-color: rgb(75, 75, 75);
+  font-size: 20px;
+  color: rgb(221, 221, 221);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.timer__items--rigth-border {
+  padding-right: 10px;
+  border-right: 1px solid rgb(219, 99, 18);
+}
+/* HW11 -search service */
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background-color: #32343b;
+
+  padding: 20px 20px;
+}
+.form__input {
+  border-radius: 10px;
+  min-width: 190px;
+  padding: 10px;
+  border: none;
+  color: inherit;
+  background-color: #585a63;
+}
+.close-mobile {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  fill: #e4e4e4;
+}
+.form__reset-btn {
+  position: absolute;
+  top: 20px;
+  left: 170px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  background-color: #e2580a;
+}
+.spinner {
+}
+.form__submit-btn {
+}
