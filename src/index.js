@@ -1,7 +1,7 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
-import refsApi from './js/refs';
+import refsApi from './js/helpers/refsApi';
 import { renderImgMarkup } from './js/helpers/renderFunc';
 import FetchToApiService from './js/helpers/img-serviceApi';
 import SearchBtnApi from './js/helpers/spinnerApi';
