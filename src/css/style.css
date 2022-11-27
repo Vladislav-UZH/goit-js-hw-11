@@ -13,9 +13,10 @@ ul {
 img {
   display: block;
   max-width: 100%;
-  height: auto;
+  width: 100%;
   object-fit: cover;
   object-position: center;
+  height: 100%;
 }
 
 ul {
@@ -23,7 +24,6 @@ ul {
 }
 
 a {
-  padding: 0 0 0 20px;
   text-decoration: none;
   text-align: center;
   color: #dbd7d7;
@@ -52,6 +52,9 @@ body {
   border-right: 1px solid rgb(219, 99, 18);
 }
 /* HW11 -search service */
+.container {
+  padding: 0 20px;
+}
 .form {
   position: relative;
   display: flex;
@@ -70,23 +73,91 @@ body {
 }
 .close-mobile {
   display: inline-block;
-  width: 15px;
-  height: 15px;
+  width: 30px;
+  height: 30px;
   fill: #e4e4e4;
+  transition: transform, ease-in-out, 300ms;
 }
 .form__reset-btn {
   position: absolute;
   top: 20px;
-  left: 170px;
-  padding: 10px;
+  left: 182px;
+  padding: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
   border-radius: 50%;
+  background-color: transparent;
+}
+
+.form__reset-btn:hover .close-mobile {
+  fill: #e2580a;
+  transform: rotate(90deg);
+}
+
+.form__submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 20px;
+  border: none;
+  padding: 10px 20px;
   background-color: #e2580a;
+  color: #ffffff;
+  transition: background-color, linear, 300ms;
+}
+.form__submit-btn:hover {
+  background-color: #c95715;
+}
+.form__submit-btn:disabled {
+  background-color: #a34e1d;
 }
 .spinner {
+  animation: spinner 500ms linear infinite;
+  display: block;
+  border-radius: 50%;
+
+  width: 15px;
+  height: 15px;
+  border-left: 2px solid #ffffff;
+  background-color: transparent;
 }
-.form__submit-btn {
+/* #e2580a */
+.is-hidden {
+  display: none;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.gallery {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.photo-card {
+  width: 100%;
+  max-width: 480px;
+}
+.gallery-item {
+  object-fit: cover;
+}
+.img-modif {
+  width: 100%;
+  height: 377px;
+}
+.info {
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: #32343b;
 }

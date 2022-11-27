@@ -7,6 +7,14 @@
     <title>js-hw-11</title>
     <link
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.11.0/simple-lightbox.min.css"
+      integrity="sha512-2fuz5SZm+ilUXvkAiuhKoQcWBkZqRAEKhBnlIioPGOBju8E1+C6MwtpvNt/pidBXgDTU/liw70r4/4X1YJ46BQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css"
       integrity="sha512-wpPYUAdjBVSE4KJnH1VR1HeZfpl1ub8YT/NKx4PuQ5NmX2tKuGu6U/JRp5y+Y8XG2tV+wKQpNHVUX03MfMFn9Q=="
       crossorigin="anonymous"
@@ -15,20 +23,30 @@
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <a href="./index.html">Go back</a>
-    <form class="form">
-      <input class="form__input" type="text" name="searching" />
-      <button class="form__reset-btn" type="reset">
-        <svg class="icon close-mobile">
-          <use href="./svg/icomoon.svg#close-mobile"></use>
-        </svg>
-      </button>
-      <button class="form__submit-btn" type="submit">
-        <span class="spinner"></span>
-        <p>Search</p>
-      </button>
-    </form>
-    <div class="gallery"></div>
+    <div class="container">
+      <a href="./index.html">Go back</a>
+      <form class="form">
+        <input
+          class="form__input"
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search images..."
+        />
+        <button class="form__reset-btn" type="reset">
+          <svg class="icon close-mobile">
+            <use href="./svg/icomoon.svg#close-mobile"></use>
+          </svg>
+        </button>
+        <button class="form__submit-btn" type="submit">
+          <span class="spinner"></span>
+          <!-- spinner-hidden -->
+          <p class="form__submit-btn-label">Search</p>
+        </button>
+      </form>
+      <div class="gallery"></div>
+      <div class="js-guard"></div>
+    </div>
     <script src="./index.js" type="module"></script>
   </body>
 </html>
