@@ -18,20 +18,25 @@ const options = {
 const observer = new IntersectionObserver(onLoad, options);
 const api = new FetchToApiService();
 refs.form.addEventListener('submit', onSearchBtnClick);
-refs.searchBtn.disabled = false;
+const searchButtonApi = new SearchBtnApi({
+  selector: '.form__submit-btn',
+  hidden: true,
+});
 function onSearchBtnClick(e) {
   e.preventDefault();
   api.query = refs.searchInput.value;
+
   if (!refs.searchInput.value) {
     return;
   }
-  // setTimeout(() => (refs.searchBtn.disabled = true), 10000);
+  searchButtonApi.disable();
 
   api.actualPage = 1;
 
   api
     .fetchArticles()
     .then(resp => {
+      searchButtonApi.enable();
       const imgArr = resp.data.hits;
       const totalHits = resp.data.totalHits;
       if (!imgArr.length) {
@@ -87,8 +92,4 @@ function errorNotifyMess(value) {
   return Notiflix.Notify.failure(value);
 }
 
-const spinner = new SearchBtnApi({
-  selector: '.form__submit-btn',
-});
-console.log(spinner.show('is-hidden'));
 // refs.searchBtn.disabled = true;
