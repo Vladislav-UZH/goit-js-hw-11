@@ -1,7 +1,7 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
-import refs from './js/refs';
+import refsApi from './js/refs';
 import { renderImgMarkup } from './js/helpers/renderFunc';
 import FetchToApiService from './js/helpers/img-serviceApi';
 import SearchBtnApi from './js/helpers/spinnerApi';
@@ -15,18 +15,18 @@ const options = {
   rootMargin: '300px',
   treshold: 1.0,
 };
-const observer = new IntersectionObserver(onLoad, options);
+const observer = new IntersectionObserver(onLoadMore, options);
 const api = new FetchToApiService();
-refs.form.addEventListener('submit', onSearchBtnClick);
+refsApi.form.addEventListener('submit', onSearchBtnClick);
 const searchButtonApi = new SearchBtnApi({
   selector: '.form__submit-btn',
   hidden: true,
 });
 function onSearchBtnClick(e) {
   e.preventDefault();
-  api.query = refs.searchInput.value;
+  api.query = refsApi.searchInput.value;
 
-  if (!refs.searchInput.value) {
+  if (!refsApi.searchInput.value) {
     return;
   }
   searchButtonApi.disable();
@@ -44,11 +44,11 @@ function onSearchBtnClick(e) {
           'Sorry, there are no images matching your search query. Please try again.'
         );
       }
-      refs.gallery.innerHTML = '';
+      refsApi.gallery.innerHTML = '';
       successNotifyMess(totalHits);
       console.log(resp);
       loadImg(resp);
-      observer.observe(refs.jsGuardEl);
+      observer.observe(refsApi.jsGuardEl);
       return;
     })
     .catch(err => {
@@ -62,7 +62,7 @@ function loadImg(response) {
   return lightbox.refresh();
 }
 
-function onLoad(entries, observer) {
+function onLoadMore(entries, observer) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       api.incrementPage();
@@ -74,8 +74,10 @@ function onLoad(entries, observer) {
           successNotifyMess(totalHitsData);
           loadImg(resp);
           if (api.getValueToEndOfLimit() >= totalHitsData) {
-            Notiflix.Notify.warning('Opps.. That`s all ¯\\_(ツ)_/¯ ');
-            return observer.unobserve(refs.jsGuardEl);
+            Notiflix.Notify.warning(
+              'Opps.. but you`ve reached the end of search results ¯\\_(ツ)_/¯ '
+            );
+            return observer.unobserve(refsApi.jsGuardEl);
           }
         })
         .catch(err => {
@@ -92,4 +94,4 @@ function errorNotifyMess(value) {
   return Notiflix.Notify.failure(value);
 }
 
-// refs.searchBtn.disabled = true;
+// refsApi.searchBtn.disabled = true;
