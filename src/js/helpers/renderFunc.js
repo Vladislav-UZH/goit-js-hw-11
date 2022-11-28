@@ -18,20 +18,31 @@ function createMarkup(arr) {
     </div>
   </a>
   <div class="info">
-    <p class="info-item">
-      <b>Likes: ${likes}</b>
-    </p>
-    <p class="info-item">
-      <b>Views: ${views}</b>
-    </p>
-    <p class="info-item">
-      <b>Comments: ${comments}</b>
-    </p>
-    <p class="info-item">
-      <b>Downloads: ${downloads}</b>
-    </p>
-  </div>
   
+      <p class="info-item">
+        <b>Likes: </b>
+      <span class="info-value">${likes}</span>
+        </p>
+       
+  
+      <p class="info-item">
+        <b>Views: </b>
+      <span class="info-value"> ${views}</span>
+        </p>
+         
+  
+      <p class="info-item">
+        <b>Comments: </b>
+      <span class="info-value">${comments}</span>
+        </p>
+             
+    
+      <p class="info-item">
+        <b>Downloads: </b>
+      <span class="info-value">${downloads}</span>
+        </p>
+      </div> 
+  </div>
 </div>
        `
     )

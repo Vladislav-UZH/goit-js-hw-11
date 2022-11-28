@@ -163,3 +163,12 @@ body {
   align-items: center;
   background-color: #32343b;
 }
+.info-item {
+  text-align: center;
+}
+.info-value {
+  display: inline-block;
+  margin-top: 3px;
+  font-size: 15px;
+  color: #e65b0b;
+}
