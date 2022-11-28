@@ -48,6 +48,7 @@ function onSearchBtnClick(e) {
       successNotifyMess(totalHits);
       console.log(resp);
       loadImg(resp);
+      // smoothScroll();
       observer.observe(refsApi.jsGuardEl);
       return;
     })
@@ -73,6 +74,7 @@ function onLoadMore(entries, observer) {
           const totalHitsData = resp.data.totalHits;
           successNotifyMess(totalHitsData);
           loadImg(resp);
+          smoothScroll();
           if (api.getValueToEndOfLimit() >= totalHitsData) {
             Notiflix.Notify.warning(
               'Opps.. but you`ve reached the end of search results ¯\\_(ツ)_/¯ '
@@ -93,5 +95,14 @@ function successNotifyMess(value) {
 function errorNotifyMess(value) {
   return Notiflix.Notify.failure(value);
 }
+function smoothScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
 
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
+}
 // refsApi.searchBtn.disabled = true;
