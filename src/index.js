@@ -41,7 +41,7 @@ function onSearchBtnClick(e) {
       const totalHits = resp.data.totalHits;
       if (!imgArr.length) {
         return undefinedNotifyMess(
-          `Sorry, there are no images matching your ${api.query}. Please try again.`
+          `Sorry, there are no images matching your search query: "${api.query}". Please try again.`
         );
       }
       refsApi.gallery.innerHTML = '';
