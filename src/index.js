@@ -40,8 +40,8 @@ function onSearchBtnClick(e) {
       const imgArr = resp.data.hits;
       const totalHits = resp.data.totalHits;
       if (!imgArr.length) {
-        return Notiflix.Notify.info(
-          'Sorry, there are no images matching your search query. Please try again.'
+        return undefinedNotifyMess(
+          `Sorry, there are no images matching your ${api.query}. Please try again.`
         );
       }
       refsApi.gallery.innerHTML = '';
@@ -91,6 +91,9 @@ function onLoadMore(entries, observer) {
 }
 function successNotifyMess(value) {
   return Notiflix.Notify.success(`Hooray! We found ${value} images.`);
+}
+function undefinedNotifyMess(value) {
+  return Notiflix.Notify.info(value);
 }
 function errorNotifyMess(value) {
   return Notiflix.Notify.failure(value);
