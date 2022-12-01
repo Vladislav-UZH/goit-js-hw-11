@@ -24,38 +24,16 @@ const searchButtonApi = new SearchBtnApi({
 });
 function onSearchBtnClick(e) {
   e.preventDefault();
-  api.query = refsApi.searchInput.value;
+  const inputValue = refsApi.searchInput.value.trim();
+  api.query = inputValue;
 
-  if (!refsApi.searchInput.value) {
+  if (!inputValue) {
     return;
   }
   searchButtonApi.disable();
 
   api.actualPage = 1;
-
-  api
-    .fetchArticles()
-    .then(resp => {
-      searchButtonApi.enable();
-      const imgArr = resp.data.hits;
-      const totalHits = resp.data.totalHits;
-      if (!imgArr.length) {
-        return undefinedNotifyMess(
-          `Sorry, there are no images matching your search query: "${api.query}". Please try again.`
-        );
-      }
-      refsApi.gallery.innerHTML = '';
-      successNotifyMess(totalHits);
-      console.log(resp);
-      loadImg(resp);
-      // smoothScroll();
-      observer.observe(refsApi.jsGuardEl);
-      return;
-    })
-    .catch(err => {
-      errorNotifyMess('Opps.. Something went wrong!');
-      return console.log(err);
-    });
+  getImgsOnSubmit();
 }
 function loadImg(response) {
   const dataArray = response.data.hits;
@@ -63,30 +41,66 @@ function loadImg(response) {
   return lightbox.refresh();
 }
 
+async function getImgsOnSubmit() {
+  try {
+    const resp = await api.fetchArticles();
+    const imgArr = resp.data.hits;
+    const totalHits = resp.data.totalHits;
+
+    if (!imgArr.length) {
+      return undefinedNotifyMess(
+        `Sorry, there are no images matching your search query: "${api.query}". Please try again.`
+      );
+    }
+    refsApi.gallery.innerHTML = '';
+    successNotifyMess(totalHits);
+    console.log(resp);
+    loadImg(resp);
+    observer.observe(refsApi.jsGuardEl);
+    searchButtonApi.enable();
+    return;
+  } catch (error) {
+    errorNotifyMess('Opps.. Something went wrong!');
+    searchButtonApi.enable();
+    return console.log(err);
+  }
+}
+
 function onLoadMore(entries, observer) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      api.incrementPage();
-
-      api
-        .fetchArticles()
-        .then(resp => {
-          const totalHitsData = resp.data.totalHits;
-          successNotifyMess(totalHitsData);
-          loadImg(resp);
-          smoothScroll();
-          if (api.getValueToEndOfLimit() >= totalHitsData) {
-            Notiflix.Notify.warning(
-              'Opps.. but you`ve reached the end of search results ¯\\_(ツ)_/¯ '
-            );
-            return observer.unobserve(refsApi.jsGuardEl);
-          }
-        })
-        .catch(err => {
-          errorNotifyMess('Opps.. Something went wrong!');
-          return console.log(err);
-        });
+      getMoreImgAfterScroll(observer);
     }
+  });
+}
+async function getMoreImgAfterScroll(observer) {
+  try {
+    api.incrementPage();
+    const response = await api.fetchArticles();
+    const totalHitsData = response.data.totalHits;
+    loadImg(response);
+    smoothScroll();
+    if (api.getValueToEndOfLimit() >= totalHitsData) {
+      Notiflix.Notify.warning(
+        'Opps.. but you`ve reached the end of search results ¯\\_(ツ)_/¯ '
+      );
+      return observer.unobserve(refsApi.jsGuardEl);
+    }
+  } catch (error) {
+    errorNotifyMess('Opps.. Something went wrong!');
+    searchButtonApi.enable();
+    return console.log(error);
+  }
+}
+
+function smoothScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
   });
 }
 function successNotifyMess(value) {
@@ -98,14 +112,5 @@ function undefinedNotifyMess(value) {
 function errorNotifyMess(value) {
   return Notiflix.Notify.failure(value);
 }
-function smoothScroll() {
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
 
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
-}
 // refsApi.searchBtn.disabled = true;
